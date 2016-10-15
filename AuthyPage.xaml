@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		xmlns:local="clr-namespace:Authy" 
+		x:Class="Authy.AuthyPage">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="4*" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<Button 		
+				Text="GitHub" 
+				Grid.Row="0"
+				x:Name="github" />
+
+		<Button 		
+				Text="Facebook" 
+				Grid.Row="1"
+				x:Name="facebook" />
+
+		<Button 		
+				Text="Twitter" 
+				Grid.Row="2"
+				x:Name="twitter" />
+
+		
+	</Grid>
+</ContentPage>
