@@ -1,9 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace Authy
+namespace Authy.AccountManagement
 {
-	public enum Service
+	public enum Services
 	{
 		GitHub,
 		Facebook,
@@ -13,9 +13,9 @@ namespace Authy
 	
 	public class AuthorizePage : ContentPage
 	{
-		public Service Service { get; private set; }
+		public Services Service { get; private set; }
 
-		public AuthorizePage(Service service)
+		public AuthorizePage(Services service)
 		{
 			Service = service;
 		}

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Authy
+namespace Authy.AccountManagement
 {
 	public class AuthyAccount
 	{

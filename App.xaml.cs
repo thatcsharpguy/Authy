@@ -1,6 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
 
+using Authy.AccountManagement;
+
 namespace Authy
 {
 	public partial class App : Application
@@ -33,7 +35,7 @@ namespace Authy
 			// Handle when your app resumes
 		}
 
-		public static void LogIn(Service service)
+		public static void LogIn(Services service)
 		{
 			IsLogged = true;
 		}

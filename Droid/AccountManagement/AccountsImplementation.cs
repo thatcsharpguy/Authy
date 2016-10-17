@@ -2,15 +2,14 @@
 using System.Linq;
 using System.Collections.Generic;
 using Authy.AccountManagement;
-using Authy.iOS;
-using Authy.AccountManagement;
+using Authy.Droid.AccountManagement;
 
 [assembly: Xamarin.Forms.Dependency(typeof(AccountsImplementation))]
 
-namespace Authy.iOS
+namespace Authy.Droid.AccountManagement
 {
 	public class AccountsImplementation : IAccountManagerService
-	{
+    {
 		public Dictionary<Services, AuthyAccount> Accounts
 		{
 			get
@@ -21,9 +20,9 @@ namespace Authy.iOS
 				{
 					var acc = accountStore.FindAccountsForService(service).FirstOrDefault();
 					if (acc != null)
-                    {
-                        accounts.Add((Services)Enum.Parse(typeof(Services), service), new AuthyAccount(acc.ToString()));
-                    }
+					{
+						accounts.Add((Services)Enum.Parse(typeof(Services), service), new AuthyAccount( acc.ToString()));
+					}
 				}
 				return accounts;
 			}
@@ -40,11 +39,18 @@ namespace Authy.iOS
                     accountStore.Delete(acc, service);
                 }
             }
+
         }
 
         public string GetPropertyFromAccount(Services service, string property)
         {
-            throw new NotImplementedException();
+            var accountStore = Xamarin.Auth.AccountStore.Create();
+            var account = accountStore.FindAccountsForService(service.ToString()).FirstOrDefault();
+            if(account != null)
+            {
+                return account.Properties[property];
+            }
+            return null;
         }
     }
 }

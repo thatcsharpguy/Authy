@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Authy;
+using Authy.AccountManagement;
 using Authy.iOS;
 using Xamarin.Auth;
 using Xamarin.Forms;
@@ -27,38 +27,42 @@ namespace Authy.iOS
 				await authPage.Navigation.PopAsync();
 				return;
 			}
+            IKeys keys = null;
 
-			switch (authPage.Service)
-			{
-				case Service.Facebook:
-					auth2 = new OAuth2Authenticator(
-						clientId: "",
-						scope: "",
-						authorizeUrl: new Uri("https://m.facebook.com/dialog/oauth/"),
-						redirectUrl: new Uri("https://www.facebook.com/connect/login_success.html"));
-					break;
-				case Service.Twitter:
-					auth1 = new OAuth1Authenticator(
-							consumerKey: "",
-							consumerSecret: "",
-							requestTokenUrl: new Uri("https://api.twitter.com/oauth/request_token"),
-							authorizeUrl: new Uri("https://api.twitter.com/oauth/authorize"),
-							accessTokenUrl: new Uri("https://api.twitter.com/oauth/access_token"),
-							callbackUrl: new Uri("https://mobile.twitter.com/home"));
-					break;
-				case Service.GitHub:
-					auth2 = new OAuth2Authenticator(
-						clientId: "",
-						clientSecret: "",
-						scope: "",
-						authorizeUrl: new Uri("https://github.com/login/oauth/authorize"),
-						redirectUrl: new Uri("https://github.com"),
-						accessTokenUrl: new Uri("https://github.com/login/oauth/access_token"));
-					break;
-				default:
-					throw new Exception("Service " + authPage.Service + " not yet supported");
-			}
-			if (auth2 != null)
+            switch (authPage.Service)
+            {
+                case Services.Facebook:
+                    keys = new FacebookKeys();
+                    auth2 = new OAuth2Authenticator(
+                        clientId: keys.ClientId,
+                        scope: keys.Scope,
+                        authorizeUrl: new Uri(keys.AuthorizeUrl),
+                        redirectUrl: new Uri(keys.RedirectUrl));
+                    break;
+                case Services.Twitter:
+                    keys = new TwitterKeys();
+                    auth1 = new OAuth1Authenticator(
+                            consumerKey: keys.ConsumerKey,
+                            consumerSecret: keys.ConsumerSecret,
+                            requestTokenUrl: new Uri(keys.RequestTokenUrl),
+                            authorizeUrl: new Uri(keys.AuthorizeUrl),
+                            accessTokenUrl: new Uri(keys.AccessTokenUrl),
+                            callbackUrl: new Uri(keys.CallbackUrl));
+                    break;
+                case Services.GitHub:
+                    keys = new GitHubKeys();
+                    auth2 = new OAuth2Authenticator(
+                        clientId: keys.ClientId,
+                        clientSecret: keys.ConsumerSecret,
+                        scope: keys.Scope,
+                        authorizeUrl: new Uri(keys.AuthorizeUrl),
+                        redirectUrl: new Uri(keys.RedirectUrl),
+                        accessTokenUrl: new Uri(keys.AccessTokenUrl));
+                    break;
+                default:
+                    throw new Exception("Service " + authPage.Service + " not yet supported");
+            }
+            if (auth2 != null)
 			{
 				auth2.Completed += (sender, eventArgs) =>
 				{
