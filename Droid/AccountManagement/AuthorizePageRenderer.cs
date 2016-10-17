@@ -90,7 +90,7 @@ namespace Authy.Droid.AccountManagement
                     {
                         // The user cancelled
                     }
-                    activity.Finish();
+                    //activity.Finish();
                 };
                 activity.StartActivity(auth2.GetUI(activity));
             }
@@ -111,7 +111,7 @@ namespace Authy.Droid.AccountManagement
                     {
 
                     }
-                    activity.Finish();
+                    //activity.Finish();
                 };
                 activity.StartActivity(auth1.GetUI(activity));
             }

@@ -10,6 +10,7 @@ namespace Authy.Droid.AccountManagement
 {
 	public class AccountsImplementation : IAccountManagerService
     {
+
 		public Dictionary<Services, AuthyAccount> Accounts
 		{
 			get

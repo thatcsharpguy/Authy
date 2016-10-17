@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using Authy.AccountManagement;
-using Authy.iOS;
+using Authy.iOS.AccountManagement;
 using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(AuthorizePage), typeof(AuthorizePageRenderer))]
-namespace Authy.iOS
+namespace Authy.iOS.AccountManagement
 {
 	public class AuthorizePageRenderer : PageRenderer
 	{

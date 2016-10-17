@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using Authy.AccountManagement;
-using Authy.iOS;
+using Authy.iOS.AccountManagement;
 using Authy.AccountManagement;
 
 [assembly: Xamarin.Forms.Dependency(typeof(AccountsImplementation))]
 
-namespace Authy.iOS
+namespace Authy.iOS.AccountManagement
 {
 	public class AccountsImplementation : IAccountManagerService
 	{
@@ -44,7 +44,13 @@ namespace Authy.iOS
 
         public string GetPropertyFromAccount(Services service, string property)
         {
-            throw new NotImplementedException();
+			var accountStore = Xamarin.Auth.AccountStore.Create();
+			var account = accountStore.FindAccountsForService(service.ToString()).FirstOrDefault();
+			if (account != null)
+			{
+				return account.Properties[property];
+			}
+			return null;
         }
     }
 }
