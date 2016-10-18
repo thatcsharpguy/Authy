@@ -21,8 +21,9 @@ namespace Authy
         public AuthyPage()
         {
             InitializeComponent();
+			Title = "Conectar cuentas";
 
-            var deleteButton = new ToolbarItem { Text = "Erase" };
+            var deleteButton = new ToolbarItem { Text = "Delete" };
             deleteButton.Clicked += (s, a) =>
             {
                 _services.EraseAll();
@@ -128,7 +129,6 @@ namespace Authy
 
 		async Task ViewTwitterProfile(HttpClient httpClient)
 		{
-			var user_id = _services.GetPropertyFromAccount(Services.Twitter, "user_id");
 			var screen_name = _services.GetPropertyFromAccount(Services.Twitter, "screen_name");
 			var oauth_consumer_key = _services.GetPropertyFromAccount(Services.Twitter, "oauth_consumer_key");
 			var oauth_token_secret = _services.GetPropertyFromAccount(Services.Twitter, "oauth_token_secret");
@@ -215,5 +215,26 @@ namespace Authy
             }
             return System.Convert.ToBase64String(mac);
         }
+
+		protected override void OnAppearing()
+		{
+			var accounts = _services.Accounts;
+
+			if (accounts.ContainsKey(Services.GitHub))
+				github.Text = "Ver perfil de GitHub";
+			else
+				github.Text = "Conectar GitHub";
+
+			if (accounts.ContainsKey(Services.Facebook))
+				facebook.Text = "Ver perfil de Facebook";
+			else
+				facebook.Text = "Conectar Facebook";
+
+			if (accounts.ContainsKey(Services.Twitter))
+				twitter.Text = "Ver perfil de Twitter";
+			else
+				twitter.Text = "Conectar Twitter";
+
+		}
     }
 }

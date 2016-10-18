@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using Authy.AccountManagement;
 using Authy.iOS.AccountManagement;
-using Authy.AccountManagement;
 
 [assembly: Xamarin.Forms.Dependency(typeof(AccountsImplementation))]
 
@@ -11,6 +10,11 @@ namespace Authy.iOS.AccountManagement
 {
 	public class AccountsImplementation : IAccountManagerService
 	{
+		public static void Init()
+		{
+			var now = DateTime.Now;
+		}
+
 		public Dictionary<Services, AuthyAccount> Accounts
 		{
 			get

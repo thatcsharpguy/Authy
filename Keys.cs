@@ -1,5 +1,4 @@
-﻿using System;
-namespace Authy
+﻿namespace Authy
 {
 	public interface IKeys
 	{
@@ -18,19 +17,19 @@ namespace Authy
 	public class FacebookKeys : IKeys
 	{
 
-		public string AccessTokenUrl { get; } = "";
+		public string ClientId { get; } = "";  
 
 		public string AuthorizeUrl { get; } = "https://m.facebook.com/dialog/oauth/";
 
-		public string ClientId { get; } = "";
+		public string RedirectUrl { get; } = "https://www.facebook.com/connect/login_success.html";
+
+		public string AccessTokenUrl { get; } = "";
 
 		public string ClientSecret { get; }
 
 		public string ConsumerKey { get; }
 
 		public string ConsumerSecret { get; }
-
-		public string RedirectUrl { get; } = "https://www.facebook.com/connect/login_success.html";
 
 		public string RequestTokenUrl { get; }
 
@@ -42,19 +41,20 @@ namespace Authy
 	public class GitHubKeys : IKeys
 	{
 
+		public string ClientId => "";
+
+		public string ClientSecret => "";
+
 		public string AccessTokenUrl { get; } = "https://github.com/login/oauth/access_token";
 
 		public string AuthorizeUrl { get; } = "https://github.com/login/oauth/authorize";
 
-		public string ClientId => "";
-
-		public string ClientSecret => "";
+		public string RedirectUrl { get; } = "https://github.com";
 
 		public string ConsumerKey { get; }
 
 		public string ConsumerSecret { get; }
 
-		public string RedirectUrl { get; } = "https://github.com";
 
 		public string RequestTokenUrl { get; }
 
@@ -66,23 +66,23 @@ namespace Authy
 	public class TwitterKeys : IKeys
 	{
 
-		public string AccessTokenUrl { get; } = "https://api.twitter.com/oauth/access_token";
-
-		public string AuthorizeUrl { get; } = "https://api.twitter.com/oauth/authorize";
-
-		public string ClientId { get; } = "";
-
-		public string ClientSecret { get; } = "";
-
 		public string ConsumerKey { get; } = "";
 
 		public string ConsumerSecret => "";
+
+		public string AccessTokenUrl { get; } = "https://api.twitter.com/oauth/access_token";
+
+		public string AuthorizeUrl { get; } = "https://api.twitter.com/oauth/authorize";
 
 		public string RedirectUrl { get; } = "https://mobile.twitter.com/home";
 
 		public string RequestTokenUrl => "https://api.twitter.com/oauth/request_token";
 
 		public string CallbackUrl => "https://mobile.twitter.com/home";
+
+		public string ClientId { get; } = "";
+
+		public string ClientSecret { get; } = "";
 
 		public string Scope { get; } = "";
 

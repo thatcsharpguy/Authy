@@ -15,19 +15,11 @@ namespace Authy.iOS.AccountManagement
 		{
 			base.ViewDidAppear(animated);
 
-			// I've used the values from your original post
 			OAuth2Authenticator auth2 = null;
 			OAuth1Authenticator auth1 = null;
+			IKeys keys = null;
 
 			var authPage = Element as AuthorizePage;
-
-			var accounts = AccountStore.Create().FindAccountsForService(authPage.Service.ToString());
-			if (accounts.Any())
-			{
-				await authPage.Navigation.PopAsync();
-				return;
-			}
-            IKeys keys = null;
 
             switch (authPage.Service)
             {
@@ -53,7 +45,7 @@ namespace Authy.iOS.AccountManagement
                     keys = new GitHubKeys();
                     auth2 = new OAuth2Authenticator(
                         clientId: keys.ClientId,
-                        clientSecret: keys.ConsumerSecret,
+						clientSecret: keys.ClientSecret,
                         scope: keys.Scope,
                         authorizeUrl: new Uri(keys.AuthorizeUrl),
                         redirectUrl: new Uri(keys.RedirectUrl),
@@ -64,23 +56,12 @@ namespace Authy.iOS.AccountManagement
             }
             if (auth2 != null)
 			{
-				auth2.Completed += (sender, eventArgs) =>
+				auth2.Completed += async (sender, eventArgs) =>
 				{
-				// We presented the UI, so it's up to us to dismiss it on iOS.
-				DismissViewController(true, null);
-				// you may want to also do something to dismiss THIS viewcontroller, 
-				// or else you'll keep seeing the login screen              
-
-				if (eventArgs.IsAuthenticated)
-					{
-					// Use eventArgs.Account to do wonderful things
-					// ...such as saving the token, and then getting some more detailed user info from the API
-					App.LogIn(authPage.Service);
+					DismissViewController(true, null);       
+					if (eventArgs.IsAuthenticated)
 						AccountStore.Create().Save(eventArgs.Account, authPage.Service.ToString());
-					}
-					else {
-					// The user cancelled
-				}
+					await authPage.Navigation.PopAsync();
 				};
 
 				PresentViewController(auth2.GetUI(), true, null);
@@ -88,23 +69,12 @@ namespace Authy.iOS.AccountManagement
 
 			if (auth1 != null)
 			{
-				auth1.Completed += (sender, eventArgs) =>
+				auth1.Completed += async (sender, eventArgs) =>
 				{
-					// We presented the UI, so it's up to us to dismiss it on iOS.
 					DismissViewController(true, null);
-					// you may want to also do something to dismiss THIS viewcontroller, 
-					// or else you'll keep seeing the login screen              
-
 					if (eventArgs.IsAuthenticated)
-					{
-						// Use eventArgs.Account to do wonderful things
-						// ...such as saving the token, and then getting some more detailed user info from the API
-						App.LogIn(authPage.Service);
 						AccountStore.Create().Save(eventArgs.Account, authPage.Service.ToString());
-					}
-					else {
-						
-					}
+					await authPage.Navigation.PopAsync();
 				};
 
 				PresentViewController(auth1.GetUI(), true, null);

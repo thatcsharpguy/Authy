@@ -35,9 +35,5 @@ namespace Authy
 			// Handle when your app resumes
 		}
 
-		public static void LogIn(Services service)
-		{
-			IsLogged = true;
-		}
 	}
 }
