@@ -13,7 +13,7 @@ namespace Authy.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
-			AccountsImplementation.Init();
+			AccountManagementImplementation.Init();
 
 			LoadApplication(new App());
 

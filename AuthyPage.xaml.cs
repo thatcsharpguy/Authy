@@ -5,7 +5,6 @@ using Xamarin.Forms;
 using ModernHttpClient;
 using System.Net.Http;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -52,7 +51,7 @@ namespace Authy
 
             if (sndr == facebook)
 			{
-				if (accounts.ContainsKey(Services.Facebook))
+				if (accounts.Contains(Services.Facebook))
 				{
 					await ViewFacebookProfile(httpClient);
 				}
@@ -63,7 +62,7 @@ namespace Authy
 			}
 			else if (sndr == twitter)
 			{
-				if (accounts.ContainsKey(Services.Twitter))
+				if (accounts.Contains(Services.Twitter))
 				{
 					await ViewTwitterProfile(httpClient);
 				}
@@ -74,7 +73,7 @@ namespace Authy
 			}
 			else if (sndr == github)
 			{
-				if (accounts.ContainsKey(Services.GitHub))
+				if (accounts.Contains(Services.GitHub))
 				{
 					await ViewGitHubProfile(httpClient);
 				}
@@ -220,17 +219,17 @@ namespace Authy
 		{
 			var accounts = _services.Accounts;
 
-			if (accounts.ContainsKey(Services.GitHub))
+			if (accounts.Contains(Services.GitHub))
 				github.Text = "Ver perfil de GitHub";
 			else
 				github.Text = "Conectar GitHub";
 
-			if (accounts.ContainsKey(Services.Facebook))
+			if (accounts.Contains(Services.Facebook))
 				facebook.Text = "Ver perfil de Facebook";
 			else
 				facebook.Text = "Conectar Facebook";
 
-			if (accounts.ContainsKey(Services.Twitter))
+			if (accounts.Contains(Services.Twitter))
 				twitter.Text = "Ver perfil de Twitter";
 			else
 				twitter.Text = "Conectar Twitter";

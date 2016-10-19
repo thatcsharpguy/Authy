@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authy.iOS", "iOS\Authy.iOS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authy.Droid", "Droid\Authy.Droid.csproj", "{2BA34DCF-7286-4C53-8A8B-B190E04A48C6}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Authy.Shared", "Authy.Shared\Authy.Shared.shproj", "{A10FA724-8CC4-49D7-9EA9-B21EA43E671A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

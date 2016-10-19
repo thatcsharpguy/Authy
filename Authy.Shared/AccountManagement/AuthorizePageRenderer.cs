@@ -1,22 +1,35 @@
-using System;
-using System.Linq;
-
-using Android.App;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using Xamarin.Auth;
+﻿using System;
 using Authy.AccountManagement;
-using Authy.Droid.AccountManagement;
+using Xamarin.Forms;
+using Xamarin.Auth;
+#if __IOS__
+using Xamarin.Forms.Platform.iOS;
+#elif __ANDROID__
+using Xamarin.Forms.Platform.Android;
+#endif
 
-[assembly: ExportRenderer(typeof(AuthorizePage), typeof(AuthorizePageRenderer))]
+#if __IOS__
+[assembly: ExportRenderer(typeof(AuthorizePage), typeof(Authy.iOS.AccountManagement.AuthorizePageRenderer))]
+namespace Authy.iOS.AccountManagement
+#elif __ANDROID__
+[assembly: ExportRenderer(typeof(AuthorizePage), typeof(Authy.Droid.AccountManagement.AuthorizePageRenderer))]
 namespace Authy.Droid.AccountManagement
+#endif
 {
 	public class AuthorizePageRenderer : PageRenderer
 	{
-        protected override async void OnElementChanged(ElementChangedEventArgs<Page> e)
+
+#if __IOS__
+		public override void ViewDidAppear(bool animated)
+		{
+			base.ViewDidAppear(animated);
+#elif __ANDROID__
+		protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
 		{
 			base.OnElementChanged(e);
-			var activity = this.Context as Activity;
+			var activity = this.Context as Android.App.Activity;
+#endif
+
 
 			OAuth2Authenticator auth2 = null;
 			OAuth1Authenticator auth1 = null;
@@ -57,27 +70,45 @@ namespace Authy.Droid.AccountManagement
 				default:
 					throw new Exception("Service " + authPage.Service + " not yet supported");
 			}
+
 			if (auth2 != null)
 			{
 				auth2.Completed += async (sender, eventArgs) =>
 				{
+#if __IOS__
+					DismissViewController(true, null);
+#endif
 					if (eventArgs.IsAuthenticated)
 						AccountStore.Create().Save(eventArgs.Account, authPage.Service.ToString());
 					await authPage.Navigation.PopAsync();
 				};
-				activity.StartActivity(auth1.GetUI(activity));
+#if __IOS__
+				PresentViewController(auth2.GetUI(), true, null);
+#elif __ANDROID__
+				activity.StartActivity(auth2.GetUI(activity));
+#endif
 			}
 
 			if (auth1 != null)
 			{
 				auth1.Completed += async (sender, eventArgs) =>
 				{
+#if __IOS__
+					DismissViewController(true, null);
+#endif
 					if (eventArgs.IsAuthenticated)
 						AccountStore.Create().Save(eventArgs.Account, authPage.Service.ToString());
 					await authPage.Navigation.PopAsync();
 				};
+			
+#if __IOS__
+				PresentViewController(auth1.GetUI(), true, null);
+#elif __ANDROID__
 				activity.StartActivity(auth1.GetUI(activity));
+#endif
 			}
+
 		}
 	}
+
 }
